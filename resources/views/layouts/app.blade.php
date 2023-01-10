@@ -32,6 +32,7 @@
     <meta name="description" content="" />
 
    <x-style></x-style>
+   @livewireStyles
   </head>
 
   <body>
@@ -63,5 +64,6 @@
     <!-- / Layout wrapper -->
    
     <x-script></x-script>
+    @livewireScripts
   </body>
 </html>
