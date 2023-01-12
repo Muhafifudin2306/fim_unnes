@@ -33,6 +33,7 @@
 
    <x-style></x-style>
    @livewireStyles
+   @notifyCss
   </head>
 
   <body>
@@ -40,17 +41,19 @@
  <!-- Layout wrapper -->
  <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-
+        
         <x-aside></x-aside>
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-
+          <div style="z-index: 10000">
+            <x:notify-messages />
+          </div>
           <x-navbar></x-navbar>
 
           <!-- / Navbar -->
-
+          
           <!-- Content wrapper -->
           @yield('content')
           <!-- Content wrapper -->
@@ -65,5 +68,6 @@
    
     <x-script></x-script>
     @livewireScripts
+    @notifyJs
   </body>
 </html>
