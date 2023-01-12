@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -31,10 +32,18 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $role = Role::create([
-            'name' => $request->name
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:roles,name',
         ]);
-        $role->syncPermissions($request->permissions);
+
+        $role = Role::create($validator->validated());
+
+        if ($role) {
+            $role->syncPermissions($request->permissions);
+            notify()->success('Role created successfully', 'Success');
+        } else {
+            notify()->error('Role not created', 'Error');
+        }
         return back();
     }
 
@@ -53,14 +62,30 @@ class RoleController extends Controller
 
     public function update(Request $request, Role $role)
     {
-        $role->update($request->all());
-        $role->syncPermissions($request->permissions);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:roles,name',
+        ]);
+
+        $update = $role->update($validator->validated());
+
+        if ($update) {
+            $role->syncPermissions($request->permissions);
+            notify()->success('Role updated successfully', 'Success');
+        } else {
+            notify()->error('Role not updated', 'Error');
+        }
+
         return back();
     }
 
     public function destroy(Role $role)
     {
-        $role->delete();
+        $del = $role->delete();
+        if ($del) {
+            notify()->success('Role deleted successfully', 'Success');
+        } else {
+            notify()->error('Role not deleted', 'Error');
+        }
         return back();
     }
 

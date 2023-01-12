@@ -4,13 +4,14 @@
 <div class="content-wrapper">
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Roles/</span> Create Role</h4>
+        <h4 class="fw-bold py-3 mb-4"><a href="{{ route('roles.index') }}" class="text-muted fw-light">Roles /</a>
+            Create Role</h4>
 
         <!-- Basic Layout -->
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Create new role</h5>
-                <small class="text-muted float-end">Merged input group</small>
+                <a href="{{ route('roles.permissions') }}" class="btn ms-2 btn-secondary">Permissions</a>
             </div>
             <div class="card-body">
                 <form action="{{ route('roles.store') }}" method="POST">
@@ -18,10 +19,14 @@
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">Role Name</label>
                         <div class="input-group input-group-merge">
-                            <span id="basic-icon-default-fullname2" class="input-group-text"><i
-                                    class="bx bx-lock"></i></span>
-                            <input type="text" class="form-control" id="basic-icon-default-fullname" placeholder="Admin"
-                                name="name" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2" />
+                            <span id="name" class="input-group-text"><i class="bx bx-lock"></i></span>
+                            <input type="text" required class="form-control @error('name') is-invalid @enderror"
+                                id="name" placeholder="Admin" name="name" aria-describedby="name" />
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                     </div>
 
@@ -53,7 +58,10 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="d-flex">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="{{ route('roles.index') }}" class="btn btn-secondary ml-3">Back</a>
+                    </div>
                 </form>
             </div>
         </div>

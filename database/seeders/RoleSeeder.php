@@ -26,8 +26,19 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'edit post']);
         Permission::create(['name' => 'delete post']);
 
-        Role::create(['name' => 'admin'])->syncPermissions(['create post', 'edit post', 'delete post']);
-        Role::create(['name' => 'writer'])->syncPermissions(['create post', 'delete post']);
-        Role::create(['name' => 'anjing'])->syncPermissions(['create post']);
+        Role::create([
+            'name' => 'individu',
+        ])->syncPermissions(['create post', 'edit post', 'delete post']);
+        Role::create([
+            'name' => 'sekolah',
+        ])->syncPermissions(['create post', 'delete post']);
+        Role::create([
+            'name' => 'mahasiswa',
+        ])->syncPermissions(['create post']);
+
+        Role::create(['name' => 'admin'])
+            ->syncPermissions(['create post', 'edit post', 'delete post']);
+        Role::create(['name' => 'panitia'])
+            ->syncPermissions(['create post', 'edit post', 'delete post']);
     }
 }
